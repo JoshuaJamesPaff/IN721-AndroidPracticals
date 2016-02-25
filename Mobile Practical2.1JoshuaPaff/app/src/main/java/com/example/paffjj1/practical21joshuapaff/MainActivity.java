@@ -3,6 +3,7 @@ package com.example.paffjj1.practical21joshuapaff;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +64,15 @@ public class MainActivity extends AppCompatActivity {
                 }
 
             if(keyCode == KeyEvent.KEYCODE_ENTER){
-                //
+                EditText editText = (EditText) findViewById(R.id.editText);
+                Editable username = editText.getText();
+                if(username.length() == 8){
+                    Toast atToast = Toast.makeText(MainActivity.this,("Thankyou " + username),Toast.LENGTH_LONG);
+                    atToast.show();
+                }else{
+                    Toast atToast = Toast.makeText(MainActivity.this,"Username must be 8 characters",Toast.LENGTH_LONG);
+                    atToast.show();
+                }
             }
 
 
