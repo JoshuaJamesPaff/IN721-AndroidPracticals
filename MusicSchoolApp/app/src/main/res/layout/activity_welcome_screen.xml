@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="nz.ac.op.paffjj1student.musicschoolapp.WelcomeScreen"
+    android:background="#d118af">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/instruments"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="0dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Paffs School of Musicalism"
+        android:id="@+id/textViewMusicSchool"
+        android:layout_marginTop="38dp"
+        android:focusableInTouchMode="false"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#8ff3a2"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/EnrolText"
+        android:id="@+id/buttonNextActivity"
+        android:background="#98d665"
+        android:textColor="#ad19b4"
+        android:textColorHint="#440b0b"
+        android:textStyle="bold"
+        android:layout_marginBottom="28dp"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignLeft="@+id/textViewMusicSchool"
+        android:layout_alignStart="@+id/textViewMusicSchool"
+        android:layout_alignRight="@+id/textViewMusicSchool"
+        android:layout_alignEnd="@+id/textViewMusicSchool" />
+
+</RelativeLayout>
