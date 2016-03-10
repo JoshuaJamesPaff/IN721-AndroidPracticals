@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">WelcomeToDunedin</string>
+    <string-array name="pages">
+        <item>Services</item>
+        <item>Fun Things To Do</item>
+        <item>Dining</item>
+        <item>Shopping</item>
+    </string-array>
+</resources>
