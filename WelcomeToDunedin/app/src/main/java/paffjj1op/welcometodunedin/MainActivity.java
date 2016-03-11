@@ -1,6 +1,7 @@
 package paffjj1op.welcometodunedin;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -31,10 +32,14 @@ public class MainActivity extends AppCompatActivity {
     // sets labels to list view using adapter
     public void setMenuList(){
 
-        //array adapter set to list view
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.pages, android.R.layout.activity_list_item);
+        //create resources object to convert xml array to a string object
+        Resources resourceMachine = getResources();
+        String[] menuArray = resourceMachine.getStringArray(R.array.pages);
+
+        //array adapter created and set to list view
+        ArrayAdapter<String> menuNamesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menuArray);
         ListView menuGroupListView = (ListView) findViewById(R.id.left_drawer);
-        menuGroupListView.setAdapter(adapter);
+        menuGroupListView.setAdapter(menuNamesAdapter);
 
     }
 
