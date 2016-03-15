@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Fragments</string>
+    <string-array name="cities" >
+        <item>Auckland</item>
+        <item>Whangarei</item>
+        <item>Wellington</item>
+        <item>Christchurch</item>
+        <item>Dunedin</item>
+        <item>Hamilton</item>
+    </string-array>
+</resources>
