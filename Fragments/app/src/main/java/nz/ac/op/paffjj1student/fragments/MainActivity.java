@@ -1,13 +1,12 @@
 package nz.ac.op.paffjj1student.fragments;
 
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,59 +15,52 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.tablet_layout);
 
         //creates button object and handler objects
-        Button buttonImageFragmentToggle = (Button) findViewById(R.id.buttonImageView);
-        Button buttonListFragmentToggle = (Button) findViewById(R.id.buttonListView);
+        Button buttonImageFragment = (Button) findViewById(R.id.buttonImageView);
+        Button buttonListFragment = (Button) findViewById(R.id.buttonListView);
 
-        ButtonClickHandler clickHandler = new ButtonClickHandler();
+        ImageButtonClickHandler imageClickHandler = new ImageButtonClickHandler();
+        ListButtonClickHandler listClickHandler = new ListButtonClickHandler();
 
         //sets listeners to buttons
-        buttonImageFragmentToggle.setOnClickListener(clickHandler);
-        buttonListFragmentToggle.setOnClickListener(clickHandler);
+        buttonImageFragment.setOnClickListener(imageClickHandler);
+        buttonListFragment.setOnClickListener(listClickHandler);
 
     }
 
-    public class ButtonClickHandler implements View.OnClickListener{
+    public class ImageButtonClickHandler implements View.OnClickListener{
 
         @Override
         public void onClick(View v){
 
-            FragmentManager fm = getSupportFragmentManager();
+            Fragment imageFragment = new ShowImageFragment();
+            FragmentManager fm = getFragmentManager();
 
             //fragment transaction obj
             FragmentTransaction ft = fm.beginTransaction();
 
-            // add fragments
-            switch (v.getId()) {
+            ft.replace(R.id.image_fragment_container, imageFragment);
 
-                //image fragment toggle
-                case R.id.buttonImageView:
+            ft.commit();
+        }
+    }
 
-                    Fragment imageFragment = new ShowImageFragment();
+    public class ListButtonClickHandler implements View.OnClickListener{
 
-                    ft.replace(R.id.image_fragment_container, imageFragment);
+        @Override
+        public void onClick(View v){
 
-                    ft.commit();
+            Fragment listViewFragment = new ShowListViewFragment();
+            FragmentManager fm = getFragmentManager();
 
-                    break;
+            //fragment transaction obj
+            FragmentTransaction ft = fm.beginTransaction();
 
-                //listView fragment toggle
-                case R.id.buttonListView:
+            ft.replace(R.id.list_view_fragment_container, listViewFragment);
 
-                    Fragment listViewFragment = new ShowListViewFragment();
-
-                    ft.replace(R.id.list_view_fragment_container, listViewFragment);
-
-                    ft.commit();
-
-                    break;
-
-                default:
-                    break;
-            }
-
+            ft.commit();
         }
     }
 }
