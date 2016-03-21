@@ -33,7 +33,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/EnrolText"
+        android:text="Enrol"
         android:id="@+id/buttonNextActivity"
         android:background="#98d665"
         android:textColor="#ad19b4"
