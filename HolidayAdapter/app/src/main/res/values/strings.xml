@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">HolidayAdapter</string>
+
+    <string-array name="pages">
+        <item>Fun Things To Do</item>
+        <item>Services</item>
+        <item>Dining</item>
+        <item>Shopping</item>
+    </string-array>
+
+</resources>
