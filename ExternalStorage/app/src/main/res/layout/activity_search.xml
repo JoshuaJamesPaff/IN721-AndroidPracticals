@@ -12,14 +12,34 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView" />
+        android:text="Select a country"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-    <EditText
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/listViewCities"
+        android:headerDividersEnabled="false"
+        android:layout_below="@+id/buttonLoadCities"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="33dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerCountries"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="68dp" />
+        android:layout_marginTop="18dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Load Cities"
+        android:id="@+id/buttonLoadCities"
+        android:layout_below="@+id/spinnerCountries"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
