@@ -1,7 +1,5 @@
 package nz.ac.op.paffjj1student.jsonlistview;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,11 +22,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     
     private String jsonRawInput;
-    private JSONObject eventData;
-    private JSONArray eventArray;
+    private JSONArray jsonArrayEvents;
     private int numEvents;
-    private ListView displayActivities;
-    private Button buttonLoad;
+    private ListView lvDisplayEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +34,14 @@ public class MainActivity extends AppCompatActivity {
         jsonRawInput = "";
 
         //listview to display json data
-        displayActivities = (ListView) findViewById(R.id.listViewJsonDisplay);
+        lvDisplayEvents = (ListView) findViewById(R.id.listViewJsonDisplay);
         //button that loads data
-        buttonLoad = (Button) findViewById(R.id.buttonLoadData);
+        Button buttonLoad = (Button) findViewById(R.id.buttonLoadData);
 
         //sets handlers to controls
-        displayActivities.setOnItemClickListener(new ListSelectHandler());
+        lvDisplayEvents.setOnItemClickListener(new ListSelectHandler());
         buttonLoad.setOnClickListener(new ButtonClickHandler());
+
 
 
     }
@@ -62,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
             }catch(JSONException je){
                 //pops toast if json exception thrown
-                Toast.makeText(getApplicationContext(), "Couldn't get description from JSON", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Couldn't get description from JSON object", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -75,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
             //tries to load data, pops toast if exception thrown
             try {
                 loadJSONData();
-                ArrayAdapter<String> events = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, getListViewData(jsonRawInput));
-                displayActivities.setAdapter(events);
+                ArrayAdapter<String> events = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, createListViewData(jsonRawInput));
+                lvDisplayEvents.setAdapter(events);
 
             }catch(JSONException je){
                 Toast.makeText(getApplicationContext(), "Failed to load JSON data into Listview", Toast.LENGTH_LONG).show();
@@ -88,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     //METHODS
 
     //loads data into class mermbers (throws exception otherwise)
-    public void loadJSONData() throws JSONException{
+    public void loadJSONData(){
         
         //tries to read input and return string
         try {
@@ -107,29 +104,35 @@ public class MainActivity extends AppCompatActivity {
 
             //create string from byte array
             jsonRawInput = new String(JSONBuffer);
-            
-            //sets JSON obj with raw input
-            eventData = new JSONObject(jsonRawInput);
 
-            //sets jason array of events and length of array
-            eventArray = eventData.getJSONArray("event");
-            numEvents = eventArray.length();
+            try {
+                //sets JSON obj with raw input
+                JSONObject eventData = new JSONObject(jsonRawInput);
+
+                //sets jason array of events and length of array (theres an "events" object and an "event" array)
+                JSONObject eventObject = eventData.getJSONObject("events");
+                jsonArrayEvents = eventObject.getJSONArray("event");
+
+            }catch(JSONException je){
+                Toast.makeText(getApplicationContext(), "JSON load data error", Toast.LENGTH_LONG).show();
+            }
+            numEvents = jsonArrayEvents.length();
 
         //--------------------------------------------------------------------
         //else throws exception, pops toast with IO exception
         } catch(IOException ioE){
-            Toast.makeText(getApplicationContext(), "IO Exception", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "IO Error", Toast.LENGTH_LONG).show();
         }
     }
 
     //returns the list of event titles from json object
-    public List<String> getListViewData(String JSONInput) throws JSONException{
+    public List<String> createListViewData(String JSONInput) throws JSONException{
 
         List<String> events = new ArrayList<>();
 
         for(int i = 0; i < numEvents; i++){
 
-            JSONObject currentEvent = eventArray.getJSONObject(i);
+            JSONObject currentEvent = jsonArrayEvents.getJSONObject(i);
             events.add(currentEvent.getString("title"));
         }
         return events;
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     //gets the description of an event based on index argument
     public String getDescription(int index) throws JSONException{
 
-        JSONObject currentEvent = eventArray.getJSONObject(index);
+        JSONObject currentEvent = jsonArrayEvents.getJSONObject(index);
         return currentEvent.getString("description");
     }
 
