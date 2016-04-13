@@ -170,7 +170,7 @@ public class DisplayTopArtists extends AppCompatActivity {
 
     }
     //--------------------------------------------------------------------------------------------------
-    //button click handler creates AsyncTask and executes it 
+    //button click handler creates AsyncTask and executes it
     public class ButtonClickHandler implements View.OnClickListener{
 
         @Override
