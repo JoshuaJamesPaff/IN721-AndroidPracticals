@@ -1,19 +1,16 @@
-package nz.ac.op.paffjj1student.topartists;
+package nz.ac.op.paffjj1student.searchsimilarartists;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
+import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -29,69 +26,78 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayTopArtists extends AppCompatActivity {
+public class SearchArtists extends AppCompatActivity {
+
+    private EditText searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display_top_artists);
+        setContentView(R.layout.activity_search_artists);
 
-        //creates button and sets custom handler
-        Button loadTop20 = (Button) findViewById(R.id.buttonLoadTop20);
-        loadTop20.setOnClickListener(new ButtonClickHandler());
-
+        //serach bar and button with handler
+        searchBar = (EditText) findViewById(R.id.editTextSearch);
+        Button searchButton = (Button) findViewById(R.id.buttonSearch);
+        searchButton.setOnClickListener(new ButtonClickHandler());
     }
 
     //converts json string into formatted list of strings and sets that to listview
     public void setListview(String jsonRawInput) {
 
         //initialises list
-        List<String> top20Artists = new ArrayList<>();
-        JSONArray jsonArrayTop20 = null;
+        List<String> similarArtists = new ArrayList<>();
+        JSONArray jsonArrayArtists = null;
 
         try {
             //sets JSON obj with raw input
-            JSONObject rootObject = new JSONObject(jsonRawInput);
-
-            //gets array of 20 artists from root object
-            JSONObject artistsObject = rootObject.getJSONObject("artists");
-            jsonArrayTop20 = artistsObject.getJSONArray("artist");
+            JSONObject rawData = new JSONObject(jsonRawInput);
+            //gets array of artists from root object
+            JSONObject rootObject = rawData.getJSONObject("similarartists");
+            jsonArrayArtists = rootObject.getJSONArray("artist");
 
         } catch (JSONException je) {
-            Toast.makeText(getApplicationContext(), "JSON load data error", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Please enter a search term", Toast.LENGTH_LONG).show();
         }
 
-        //loops thru json array and concatenates the artist name with the listener count and loads into a list<string>
-        for (int i = 0; i < jsonArrayTop20.length(); i++) {
+        //if no artists in array pop toast
+        if(jsonArrayArtists == null) {
+            Toast.makeText(getApplicationContext(), "No similar artists found.", Toast.LENGTH_LONG).show();
 
-            try {
-                JSONObject currentArtist = jsonArrayTop20.getJSONObject(i);
-                String artistInfo = currentArtist.getString("name") + " : " + currentArtist.getInt("listeners");
-                top20Artists.add(artistInfo);
-            }catch(JSONException je){
-                Toast.makeText(getApplicationContext(), "Error getting artist from JSON string.", Toast.LENGTH_LONG).show();
+        }else{
+            //loops thru json array and concatenates the artist name with the listener count and loads into a list<string>
+            for (int i = 0; i < jsonArrayArtists.length(); i++) {
+
+                try {
+                    JSONObject currentArtist = jsonArrayArtists.getJSONObject(i);
+                    String artistInfo = currentArtist.getString("name");
+                    similarArtists.add(artistInfo);
+                } catch (JSONException je) {
+                    Toast.makeText(getApplicationContext(), "Error getting artist from JSON string.", Toast.LENGTH_LONG).show();
+                }
             }
-        }
 
-        //listview object
-        ListView displayArtists = (ListView) findViewById(R.id.listViewArtists);
-        //sets adapter to listview
-        displayArtists.setAdapter(new Top20ArrayAdapter(this, R.layout.custom_listview_layout, top20Artists));
+            //listview object
+            ListView displayArtists = (ListView) findViewById(R.id.listViewArtists);
+
+            //sets adapter to listview
+            displayArtists.setAdapter(new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, similarArtists));
+        }
     }
 
     //--------------------------------------------------------------------------------------------------
     //inner class for handling downloads from web and setting listview
-    public class AsyncWebDownloader extends AsyncTask<Void, Void, String>{
+    public class AsyncWebDownloader extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected String doInBackground(String... artistToSearch) {
 
             String JSONstring = null;
 
             try{
-                //url with arguments that gets the top 20 artists information in json format from last.fm
-                String urlString = "http://ws.audioscrobbler.com/2.0/?method=chart.getTopArtists&limit=20&api_key=58384a2141a4b9737eacb9d0989b8a8c&format=json";
 
+                //url with arguments that gets the top 10 similar artists information in json format from last.fm
+                String urlString = "http://ws.audioscrobbler.com/2.0/?method=artist.getSimilar&limit=10&api_key=58384a2141a4b9737eacb9d0989b8a8c&format=json&artist=" +
+                        artistToSearch[0];
                 //convert to url object
                 URL URLobject = new URL(urlString);
                 //create http connection object
@@ -136,50 +142,26 @@ public class DisplayTopArtists extends AppCompatActivity {
     }
 
     //--------------------------------------------------------------------------------------------------
-    //inner class extends ArrayAdapter class to display an textview beside a textview
-    public class Top20ArrayAdapter extends ArrayAdapter<String>
-    {
-        public Top20ArrayAdapter(Context context, int resource, List<String> objects){
-            super(context, resource, objects);
-        }
-
-        //overide getview method
-        @Override
-        public View getView(int position, View concertView, ViewGroup container){
-
-            //inflate custom layout
-            LayoutInflater inflater = LayoutInflater.from(DisplayTopArtists.this);
-            View customView = inflater.inflate(R.layout.custom_listview_layout, container, false);
-
-            //textviews for artist and listener count
-            TextView artistTextView = (TextView) customView.findViewById(R.id.artistName);
-            TextView listenerCountTextView = (TextView) customView.findViewById(R.id.artistListenerCount);
-
-            //get current artist info from the list
-            String currentArtist = getItem(position);
-
-            //extracts artist and listenerCount from current string
-            String artist = currentArtist.substring(0, currentArtist.indexOf(":"));
-            String listenerCount = currentArtist.substring(currentArtist.indexOf(":") + 1, currentArtist.length());
-
-            //sets text views
-            artistTextView.setText(artist);
-            listenerCountTextView.setText(listenerCount);
-
-            return  customView;
-        }
-    }
-    //--------------------------------------------------------------------------------------------------
     //button click handler creates AsyncTask and executes it
     public class ButtonClickHandler implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
 
-            //checks internet connection
-            if(checkInternet() == true){
+            //checks internet connection (popping toast if none)
+            if(checkInternet() == true) {
+                //error handling for empty search term
+                String searchTerm;
+                if (searchBar.getText().toString().equals("")) {
+                    searchTerm = "?";
+                } else {
+                    searchTerm = searchBar.getText().toString();
+                }
+
+                //creates webdownloader passing in search term
                 AsyncWebDownloader loader = new AsyncWebDownloader();
-                loader.execute();
+                loader.execute(searchTerm);
+
             }else{
                 Toast.makeText(getApplicationContext(), "No Internet Connection Available", Toast.LENGTH_LONG).show();
             }
@@ -192,5 +174,4 @@ public class DisplayTopArtists extends AppCompatActivity {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-
 }

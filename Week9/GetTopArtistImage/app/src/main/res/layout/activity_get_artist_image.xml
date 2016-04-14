@@ -7,23 +7,22 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="nz.ac.op.paffjj1student.topartists.DisplayTopArtists">
+    tools:context="nz.ac.op.paffjj1student.gettopartistimage.GetArtistImage">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Load Top 20 Artists"
-        android:id="@+id/buttonLoadTop20"
-        android:layout_marginTop="25dp"
+        android:text="Get Top Artist Image"
+        android:id="@+id/buttonGetImage"
+        android:layout_marginTop="19dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewArtists"
-        android:layout_below="@+id/buttonLoadTop20"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="41dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/imageViewTopArtist"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
