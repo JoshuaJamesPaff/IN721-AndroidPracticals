@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="nz.ac.op.paffjj1student.location.TeleportActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Latitude:"
+        android:id="@+id/textViewLatitudeLabel"
+        android:layout_marginTop="31dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="33dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Longitude:"
+        android:id="@+id/textViewLongitudeLabel"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/textViewLatitudeLabel"
+        android:layout_alignStart="@+id/textViewLatitudeLabel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/textViewLatitudeDisplay"
+        android:layout_alignTop="@+id/textViewLatitudeLabel"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="27dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/textViewLongitudeDisplay"
+        android:layout_alignBottom="@+id/textViewLongitudeLabel"
+        android:layout_alignEnd="@+id/textViewLatitudeDisplay" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Closest City:"
+        android:id="@+id/textViewCityLabel"
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/textViewLongitudeLabel"
+        android:layout_alignStart="@+id/textViewLongitudeLabel" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dunedin"
+        android:id="@+id/textViewClosestCity"
+        android:layout_alignBottom="@+id/textViewCityLabel"
+        android:layout_alignEnd="@+id/textViewLongitudeDisplay" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageViewCity"
+        android:layout_below="@+id/textViewCityLabel"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="44dp" />
+</RelativeLayout>
