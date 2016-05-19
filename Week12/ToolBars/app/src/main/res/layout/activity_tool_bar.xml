@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="nz.ac.op.paffjj1student.toolbars.ToolBarActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings: "
+        android:id="@+id/textViewSettings"
+        android:layout_below="@+id/etSearchBar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="143dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etSearchBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="80dp" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:id="@+id/rbSettingA"
+        android:layout_alignTop="@+id/textViewSettings"
+        android:layout_toEndOf="@+id/textViewSettings"
+        android:layout_marginStart="52dp" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="B"
+        android:id="@+id/rbSettingB"
+        android:layout_below="@+id/rbSettingA"
+        android:layout_alignStart="@+id/rbSettingA" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="C"
+        android:id="@+id/rbSettingC"
+        android:layout_below="@+id/rbSettingB"
+        android:layout_alignStart="@+id/rbSettingB" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use the ToolBar to show/hide controls"
+        android:id="@+id/textViewTitle"
+        android:layout_marginBottom="30dp"
+        android:textStyle="normal|bold"
+        android:textSize="24dp"
+        android:textAlignment="center"
+        android:layout_above="@+id/rbSettingA"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search"
+        android:id="@+id/textViewSearch"
+        android:layout_below="@+id/etSearchBar"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>
